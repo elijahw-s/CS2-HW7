@@ -16,11 +16,11 @@ HTree::HTree(key_t key,
   }
 
 // recursively destroy a tree
-HTree::~HTree(){
-  this->get_child(HTree::Direction(0)).~HTree();
-  this->get_child(HTree::Direction(1)).~HTree();
-  delete this;
-}
+//HTree::~HTree(){
+//  this->get_child(HTree::Direction(0)).~HTree();
+//  this->get_child(HTree::Direction(1)).~HTree();
+//  delete this;
+//}
 
 // return the key of the current node
 HTree::key_t HTree::get_key() const{
@@ -38,6 +38,8 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
     return this->left_;
   } else if (dir == HTree::Direction(1)){
     return this->right_;
+  } else {
+    return nullptr;
   }
 }
 
@@ -49,29 +51,30 @@ HTree::path_to(key_t key) const
   //if (!this){ //??? how to check if not *this
     //return nullptr;
   //}
-
-  HTree::path_t path;
-  if (this.get_key() == key){
-    auto pointPath(std::make_unique<HTree::possible_path_t>(path));
+  auto pointPath = std::make_unique<path_t>(new path_t());
+  if (this->get_key() == key){
+    //HTree::possible_path_t pointPath = path;
     return pointPath;
   }
 
-  const auto testLeft = this.get_child(HTree::Direction(0)).path_to(key);
-  if (!*testLeft.empty()){
-    path.push_back(HTree::Direction(0));
-    path.push_back(*testLeft);
-    auto pointPath(std::make_unique<HTree::possible_path_t>(path));
-    return pointPath;
-  }
+  //const auto testLeft = this->get_child(HTree::Direction(0)).path_to(key);
+  //if (!*testLeft.empty()){
+    //path.push_back(HTree::Direction(0));
+    //path.push_back(*testLeft);
+    //auto pointPath(std::make_unique<HTree::possible_path_t>(path));
+    //HTree::possible_path_t pointPath = path;
+    //return pointPath;
+  //}
 
-  const auto testRight = *this->_right.path_to(key);
-  if (*testRight.empty()){
-    return nullptr;
-  } else {
-    path.push_back(HTree::Direction(1));
-    path.push_back(*testRight);
-    auto pointPath(std::make_unique<HTree::possible_path_t>(path)); 
-    return *pointPath;
+  //const auto testRight = this->get_child(HTree::Direction(1)).path_to(key);
+  //if (*testRight.empty()){
+    //return nullptr;
+  //} else {
+    //path.push_back(HTree::Direction(1));
+    //path.push_back(*testRight);
+    //auto pointPath(std::make_unique<HTree::possible_path_t>(path));
+    //HTree::possible_path_t pointPath = path;
+    //return pointPath;
   }
 
 }
