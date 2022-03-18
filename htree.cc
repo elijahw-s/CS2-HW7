@@ -48,12 +48,9 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
 HTree::possible_path_t
 HTree::path_to(key_t key) const
 {
-  //if (!this){ //??? how to check if not *this
-    //return nullptr;
-  //}
-  auto pointPath = std::make_unique<path_t>(new path_t());
+
+  auto pointPath = std::make_unique<path_t>(new path_t()); // THIS!!! is the line where it breaks!
   if (this->get_key() == key){
-    //HTree::possible_path_t pointPath = path;
     return pointPath;
   }
   const auto leftTest = this->get_child(Direction(0))->path_to(key);
