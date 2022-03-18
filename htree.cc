@@ -56,25 +56,16 @@ HTree::path_to(key_t key) const
     //HTree::possible_path_t pointPath = path;
     return pointPath;
   }
-
-  //const auto testLeft = this->get_child(HTree::Direction(0)).path_to(key);
-  //if (!*testLeft.empty()){
-    //path.push_back(HTree::Direction(0));
-    //path.push_back(*testLeft);
-    //auto pointPath(std::make_unique<HTree::possible_path_t>(path));
-    //HTree::possible_path_t pointPath = path;
-    //return pointPath;
-  //}
-
-  //const auto testRight = this->get_child(HTree::Direction(1)).path_to(key);
-  //if (*testRight.empty()){
-    //return nullptr;
-  //} else {
-    //path.push_back(HTree::Direction(1));
-    //path.push_back(*testRight);
-    //auto pointPath(std::make_unique<HTree::possible_path_t>(path));
-    //HTree::possible_path_t pointPath = path;
-    //return pointPath;
+  const auto leftTest = this->get_child(Direction(0))->path_to(key);
+  if (!leftTest->empty()){
+    pointPath->push_front(Direction(0));
+    return pointPath;
   }
-
+  const auto rightTest = this->get_child(Direction(1))->path_to(key);
+  if (rightTest->empty()){
+    return pointPath;
+  } else {
+    pointPath->push_front(Direction(1));
+    return pointPath;
+  }
 }
