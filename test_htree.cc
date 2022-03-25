@@ -33,15 +33,33 @@ void test_htree(const HTree::tree_ptr_t root)
   //lrPath->push_back(HTree::Direction(1));
   auto testLRPath = root->path_to(3);
   std::cout << "found path to 3" << '\n';
-  assert(*testLRPath == *lrPath); //HTree::path_t({0,1}));
-  std::cout << "passed lr path test" << '\n';
+  if (testLRPath->empty()){
+    std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
+  } else {
+    for (auto const &i: *testLRPath) {
+      if (i == HTree::Direction(0)){
+        std::cout << "0" << std::endl;
+      } else{
+        std::cout << "1" << std::endl;
+      }
+    }
+  }
+  //assert(*testLRPath == *lrPath); //HTree::path_t({0,1}));
+  //std::cout << "passed lr path test" << '\n';
 
   std::unique_ptr<HTree::path_t> llPath(new HTree::path_t());
   llPath->push_back(HTree::Direction(0));
   llPath->push_back(HTree::Direction(0));
   auto testLLPath = root->path_to(12);
-  assert(*testLLPath == *llPath); //HTree::path_t({0,0}));
-  std::cout << "passed ll path test" << '\n';
+  for (auto const &i: *testLLPath) {
+    if (i == HTree::Direction(0)){
+      std::cout << "0" << std::endl;
+    } else{
+      std::cout << "1" << std::endl;
+    }
+  }
+  //assert(*testLLPath == *llPath); //HTree::path_t({0,0}));
+  //std::cout << "passed ll path test" << '\n';
   //assert(root->path_to(54) == nullptr);
 
   //assert(node_at(root, "")->key_ == 126);

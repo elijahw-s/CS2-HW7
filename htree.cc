@@ -51,10 +51,8 @@ HTree::path_to(key_t key) const
 
   //possible_path_t pointPath = std::make_unique<path_t>(new path_t()); // THIS!!! is the line where it breaks!
   std::unique_ptr<path_t> pointPath(new path_t());
-  if (this){
-    if (this->get_key() == key){
-      return pointPath;
-    }
+  if (this->get_key() == key){
+    return pointPath;
   }
   if (this->get_child(Direction(0))){
     const auto leftTest = this->get_child(Direction(0))->path_to(key);
@@ -73,5 +71,5 @@ HTree::path_to(key_t key) const
     }
   }
 
-  return nullptr;
+  return pointPath;
 }
