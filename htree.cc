@@ -16,11 +16,11 @@ HTree::HTree(key_t key,
   }
 
 // recursively destroy a tree
-//HTree::~HTree(){
-//  this->get_child(HTree::Direction(0)).~HTree();
-//  this->get_child(HTree::Direction(1)).~HTree();
-//  delete this;
-//}
+HTree::~HTree(){
+  //this->get_child(HTree::Direction(0)).~HTree();
+  //this->get_child(HTree::Direction(1)).~HTree();
+  delete this;
+}
 
 // return the key of the current node
 HTree::key_t HTree::get_key() const{
@@ -49,7 +49,8 @@ HTree::possible_path_t
 HTree::path_to(key_t key) const
 {
 
-  auto pointPath = std::make_unique<path_t>(new path_t()); // THIS!!! is the line where it breaks!
+  //possible_path_t pointPath = std::make_unique<path_t>(new path_t()); // THIS!!! is the line where it breaks!
+  std::unique_ptr<path_t> pointPath(new path_t());
   if (this->get_key() == key){
     return pointPath;
   }
@@ -65,4 +66,6 @@ HTree::path_to(key_t key) const
     pointPath->push_front(Direction(1));
     return pointPath;
   }
+
+  return nullptr;
 }
