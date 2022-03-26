@@ -4,6 +4,7 @@
  */
 
 #include "htree.hh"
+#include <iostream>
 
 
 // Construct a tree
@@ -52,24 +53,60 @@ HTree::path_to(key_t key) const
   //possible_path_t pointPath = std::make_unique<path_t>(new path_t()); // THIS!!! is the line where it breaks!
   std::unique_ptr<path_t> pointPath(new path_t());
   if (this->get_key() == key){
+    std::cout << "The path is: ";
+    if (pointPath->empty()){
+      std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
+    } else {
+      for (auto const &i: *pointPath) {
+        if (i == HTree::Direction(0)){
+          std::cout << "0 ";
+        } else{
+          std::cout << "1 ";
+        }
+      }
+    }
+    std::cout <<"\n";
     return pointPath;
   }
-  if (this->get_child(Direction(0))){
-    const auto leftTest = this->get_child(Direction(0))->path_to(key);
-    if (!leftTest->empty()){
-      pointPath->push_front(Direction(0));
-      return pointPath;
-    }
+  const auto leftTest = this->get_child(Direction(0))->path_to(key);
+  if (!leftTest->empty()){
+    pointPath->push_front(Direction(0));
+      std::cout << "The path is: ";
+      if (pointPath->empty()){
+        std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
+      } else {
+        for (auto const &i: *pointPath) {
+          if (i == HTree::Direction(0)){
+            std::cout << "0 ";
+          } else{
+            std::cout << "1 ";
+          }
+        }
+      }
+      std::cout <<"\n";
+    return pointPath;
   }
-  if (this->get_child(Direction(1))){
-    const auto rightTest = this->get_child(Direction(1))->path_to(key);
-    if (rightTest->empty()){
-      return pointPath;
-    } else {
-      pointPath->push_front(Direction(1));
-      return pointPath;
-    }
+  
+  const auto rightTest = this->get_child(Direction(1))->path_to(key);
+  if (rightTest->empty()){
+    return pointPath;
+  } else {
+    pointPath->push_front(Direction(1));
+      std::cout << "The path is: ";
+      if (pointPath->empty()){
+        std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
+      } else {
+        for (auto const &i: *pointPath) {
+          if (i == HTree::Direction(0)){
+            std::cout << "0 ";
+          } else{
+            std::cout << "1 ";
+          }
+        }
+      }
+      std::cout <<"\n";
+    return pointPath;
   }
 
-  return pointPath;
+  //return pointPath;
 }

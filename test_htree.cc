@@ -29,27 +29,19 @@ void test_htree(const HTree::tree_ptr_t root)
 
   std::unique_ptr<HTree::path_t> lrPath(new HTree::path_t({HTree::Direction(0), HTree::Direction(1)}));
   std::cout << "made lr path sample" << '\n';
-  //lrPath->push_back(HTree::Direction(0));
-  //lrPath->push_back(HTree::Direction(1));
+  lrPath->push_back(HTree::Direction(0));
+  lrPath->push_back(HTree::Direction(1));
   auto testLRPath = root->path_to(3);
-  std::cout << "found path to 3" << '\n';
-  if (testLRPath->empty()){
-    std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
-  } else {
-    for (auto const &i: *testLRPath) {
-      if (i == HTree::Direction(0)){
-        std::cout << "0" << std::endl;
-      } else{
-        std::cout << "1" << std::endl;
-      }
-    }
+
   }
   //assert(*testLRPath == *lrPath); //HTree::path_t({0,1}));
   //std::cout << "passed lr path test" << '\n';
-
-  std::unique_ptr<HTree::path_t> llPath(new HTree::path_t());
-  llPath->push_back(HTree::Direction(0));
-  llPath->push_back(HTree::Direction(0));
+  //HTree::possible_path_t llPath;
+  //*llPath = new HTree::path_t();
+  //std::unique_ptr<HTree::path_t> llPath(new HTree::path_t());
+  //llPath->push_back(HTree::Direction(0));
+  //llPath->push_back(HTree::Direction(0));
+  std::unique_ptr<HTree::path_t> lrPath(new HTree::path_t({HTree::Direction(0), HTree::Direction(0)}));
   auto testLLPath = root->path_to(12);
   for (auto const &i: *testLLPath) {
     if (i == HTree::Direction(0)){
