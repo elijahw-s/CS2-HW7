@@ -5,6 +5,7 @@
 
 #include "htree.hh"
 #include <iostream>
+#include <memory>
 
 
 // Construct a tree
@@ -46,67 +47,61 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
 
 // Return an optional list of directions from root to a node of a given key.
 // If key not contained in this tree, returns nullptr
-HTree::possible_path_t
-HTree::path_to(key_t key) const
-{
 
-  //possible_path_t pointPath = std::make_unique<path_t>(new path_t()); // THIS!!! is the line where it breaks!
-  std::unique_ptr<path_t> pointPath(new path_t());
-  if (this->get_key() == key){
-    std::cout << "The path is: ";
-    if (pointPath->empty()){
-      std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
-    } else {
-      for (auto const &i: *pointPath) {
-        if (i == HTree::Direction(0)){
-          std::cout << "0 ";
-        } else{
-          std::cout << "1 ";
-        }
+void HTree::print_path(possible_path_t pointPath) const{
+  std::cout << "The path is: ";
+  if (pointPath->empty()){
+    std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
+  } else {
+    for (auto const &i: *pointPath) {
+      if (i == HTree::Direction(0)){
+        std::cout << "0 ";
+      } else{
+        std::cout << "1 ";
       }
     }
-    std::cout <<"\n";
-    return pointPath;
   }
-  const auto leftTest = this->get_child(Direction(0))->path_to(key);
-  if (!leftTest->empty()){
-    pointPath->push_front(Direction(0));
-      std::cout << "The path is: ";
-      if (pointPath->empty()){
-        std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
-      } else {
-        for (auto const &i: *pointPath) {
-          if (i == HTree::Direction(0)){
-            std::cout << "0 ";
-          } else{
-            std::cout << "1 ";
-          }
-        }
-      }
-      std::cout <<"\n";
-    return pointPath;
-  }
-  
-  const auto rightTest = this->get_child(Direction(1))->path_to(key);
-  if (rightTest->empty()){
-    return pointPath;
-  } else {
-    pointPath->push_front(Direction(1));
-      std::cout << "The path is: ";
-      if (pointPath->empty()){
-        std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
-      } else {
-        for (auto const &i: *pointPath) {
-          if (i == HTree::Direction(0)){
-            std::cout << "0 ";
-          } else{
-            std::cout << "1 ";
-          }
-        }
-      }
-      std::cout <<"\n";
+  std::cout <<"\n";
+}
+
+
+HTree::possible_path_t HTree::path_help(key_t key, possible_path_t pointPath) const {
+  if (this->key_ == key){
     return pointPath;
   }
 
-  //return pointPath;
+  if (this->get_child(Direction(0))){
+    const auto leftTest = this->get_child(Direction(0))->path_help(key, move(pointPath));
+    if (leftTest && !leftTest->empty()){
+      pointPath->push_front(Direction(0));
+      return pointPath;
+    }
+  }
+
+  if (this->get_child(Direction(1))){
+    const auto rightTest = this->get_child(Direction(1))->path_help(key,move(pointPath));
+    if (rightTest && rightTest->empty()){
+      std::unique_ptr<path_t> emptyPath(new path_t({}));
+      return emptyPath;
+    } else {
+      pointPath->push_front(Direction(1));
+      return pointPath;
+    }
+  }
+
+  return pointPath;
+}
+
+HTree::possible_path_t HTree::path_to(key_t key) const{
+
+  std::unique_ptr<path_t> pointPath(new path_t({})); // seems to be nullptr - why??
+  if (this->key_ == key){
+    return pointPath;
+  }
+  possible_path_t foundPath = path_help(key, move(pointPath));
+
+  if (foundPath->empty()){
+    return nullptr;
+  }
+  return foundPath;
 }

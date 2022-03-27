@@ -22,34 +22,27 @@ HTree::tree_ptr_t create_test_tree()
 
 void test_htree(const HTree::tree_ptr_t root)
 {
-  std::unique_ptr<HTree::path_t> noPath(new HTree::path_t());
+  std::unique_ptr<HTree::path_t> noPath(new HTree::path_t({ }));
   auto testNoPath = root->path_to(126);
   assert(*testNoPath == *noPath); //HTree::path_t({ }));
   std::cout << "passed no path test" << '\n';
 
-  std::unique_ptr<HTree::path_t> lrPath(new HTree::path_t({HTree::Direction(0), HTree::Direction(1)}));
-  std::cout << "made lr path sample" << '\n';
-  lrPath->push_back(HTree::Direction(0));
-  lrPath->push_back(HTree::Direction(1));
-  auto testLRPath = root->path_to(3);
-
+  std::unique_ptr<HTree::path_t> rlPath(new HTree::path_t({HTree::Direction(1), HTree::Direction(0)}));
+  std::cout << "made rl path sample" << '\n';
+  auto testRLPath = root->path_to(3);
+  std::cout << "found path to 3" << '\n';
+  if (!testRLPath){
+    std::cout << "RL path is empty \n";
   }
-  //assert(*testLRPath == *lrPath); //HTree::path_t({0,1}));
+  assert(*testRLPath == *rlPath); //HTree::path_t({0,1}));
   //std::cout << "passed lr path test" << '\n';
   //HTree::possible_path_t llPath;
   //*llPath = new HTree::path_t();
   //std::unique_ptr<HTree::path_t> llPath(new HTree::path_t());
   //llPath->push_back(HTree::Direction(0));
   //llPath->push_back(HTree::Direction(0));
-  std::unique_ptr<HTree::path_t> lrPath(new HTree::path_t({HTree::Direction(0), HTree::Direction(0)}));
+  std::unique_ptr<HTree::path_t> llPath(new HTree::path_t({HTree::Direction(0), HTree::Direction(0)}));
   auto testLLPath = root->path_to(12);
-  for (auto const &i: *testLLPath) {
-    if (i == HTree::Direction(0)){
-      std::cout << "0" << std::endl;
-    } else{
-      std::cout << "1" << std::endl;
-    }
-  }
   //assert(*testLLPath == *llPath); //HTree::path_t({0,0}));
   //std::cout << "passed ll path test" << '\n';
   //assert(root->path_to(54) == nullptr);
