@@ -24,6 +24,8 @@ class HForest {
 
 
   private:
-    bool compare_trees(tree_ptr_t t1, tree_ptr_t t2);
+    bool static compare_trees(tree_ptr_t t1, tree_ptr_t t2){
+        return t1->get_value() < t2->get_value();
+    }
     vector_ptr_t vec_;
 };
