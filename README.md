@@ -23,7 +23,13 @@ We decided to use a standard library vector of tree pointers to structure our fo
 - **pop_tree:** This function uses pop_heap to push the tree with the lowest root value to the back of the vector. Then, it saves the tree in a seperate variable, removes the element, then returns the variable.
 - **add_tree:** This function appends a tree pointer to the forest vector then uses make_heap to re-sort.
 - **compare_trees:** Private static function used to sort heap into min-heap.
- 
+
+**test_htree**
+
+We decided to use the structure of the basic tree testing file that Eitan provided on Slack, edited to work with the new encapsulation. We also added a single-element tree, a left-only tree, and a right-only tree.
+
+**test_hforest**
+We built three tree-constructor functions, each with a different value at the root. The forest initalizes with one of the trees, then the other two are added, with size checked after each addition. Then the trees are popped off one-by-one, with the forest's size checked each time.
 
 Current issues:
 
