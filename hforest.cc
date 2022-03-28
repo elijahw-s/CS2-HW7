@@ -14,7 +14,7 @@ void HForest::add_tree(tree_ptr_t tree){
 }
 
 HForest::tree_ptr_t 
-HForest::pop_tree(){ // error: unknown type name 'tree_ptr_t'
+HForest::pop_tree(){
   this->vec_->pop_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees); // error: no member named 'pop_heap' in 'std::vector<std::shared_ptr<const HTree>>'
   tree_ptr_t smallest = this->vec_->back(); // I think this is where the later problems are coming from??
   this->vec_->pop_back();
