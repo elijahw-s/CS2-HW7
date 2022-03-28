@@ -41,4 +41,6 @@ private:
   value_t value_;
   tree_ptr_t left_;
   tree_ptr_t right_;
+  void print_path(possible_path_t pointPath) const;
+  //possible_path_t path_help(key_t key, possible_path_t pointPath) const;
 };

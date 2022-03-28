@@ -35,8 +35,9 @@ void test_hforest(){
   auto tree2 = create_test_tree_2(); // root value == 100
   auto tree3 = create_test_tree_3(); // root value == -21
 
-  //std::vector<HTree::tree_ptr_t> treeVec = {tree1};
-  std::shared_ptr<HForest::vector_t> treesVec(new HForest::vector_t({tree1}));
+
+  auto treesVec(new std::vector<HForest::tree_ptr_t>({tree1})); // not initalizing well, no matching constructor for initialization of...
+
 
   auto forest = std::make_shared<HForest>(treesVec);
   assert(forest->size() == 1);

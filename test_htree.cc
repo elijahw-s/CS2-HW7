@@ -28,38 +28,22 @@ void test_htree(const HTree::tree_ptr_t root)
   std::cout << "passed no path test" << '\n';
 
   std::unique_ptr<HTree::path_t> rlPath(new HTree::path_t({HTree::Direction(1), HTree::Direction(0)}));
-  std::cout << "made rl path sample" << '\n';
   auto testRLPath = root->path_to(3);
   std::cout << "found path to 3" << '\n';
   if (!testRLPath){
     std::cout << "RL path is empty \n";
   }
-  assert(*testRLPath == *rlPath); //HTree::path_t({0,1}));
+  assert(*testRLPath == *rlPath); //testRLPath is (L)LL when it should be (L)RL
   //std::cout << "passed lr path test" << '\n';
   //HTree::possible_path_t llPath;
   //*llPath = new HTree::path_t();
   //std::unique_ptr<HTree::path_t> llPath(new HTree::path_t());
   //llPath->push_back(HTree::Direction(0));
-  //llPath->push_back(HTree::Direction(0));
-  std::unique_ptr<HTree::path_t> llPath(new HTree::path_t({HTree::Direction(0), HTree::Direction(0)}));
+  //llPath->push_back(HTree::Direction(0));// should remove extra direction 0
   auto testLLPath = root->path_to(12);
   //assert(*testLLPath == *llPath); //HTree::path_t({0,0}));
   //std::cout << "passed ll path test" << '\n';
   //assert(root->path_to(54) == nullptr);
-
-  //assert(node_at(root, "")->key_ == 126);
-  //assert(node_at(root, "L")->key_ == -5);
-  //assert(node_at(root, "LL")->key_ == 12);
-  //assert(node_at(root, "LLL") == nullptr);
-  //assert(node_at(root, "LLR") == nullptr);
-  //assert(node_at(root, "LR")->key_ == 6);
-  //assert(node_at(root, "LRL")->key_ == 9);
-  //assert(node_at(root, "LLRL") == nullptr);
-  //assert(node_at(root, "LLRR") == nullptr);
-  //assert(node_at(root, "LRR") == nullptr);
-  //assert(node_at(root, "RR") == nullptr);
-  //assert(node_at(root, "x") == nullptr);
-  // should I have some sort of node_at???
 }
 
 int main()

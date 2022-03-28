@@ -1,17 +1,18 @@
 #pragma once
 
-#include "htree.cc"
+#include "htree.hh"
+#include <vector>
 
 class HForest {
   public:
 
-    using tree_ptr_t = std::shared_ptr<const HTree>;
+    using tree_ptr_t = HTree::tree_ptr_t;
     using forest_ptr_t = std::shared_ptr<HForest>;
-    using vector_t = std::vector<tree_ptr_t>;
-    using vector_ptr_t = std::shared_ptr<vector_t>;
+    using tree_vector_t = std::vector<tree_ptr_t>;
+    //using vector_t = std::shared_ptr<vector_t>;
 
     // construct a forest
-    HForest(vector_ptr_t trees);
+    HForest(tree_vector_t trees = std::vector<tree_ptr_t>{});
 
     ~HForest()=default;
 
@@ -26,8 +27,6 @@ class HForest {
 
 
   private:
-    bool static compare_trees(tree_ptr_t t1, tree_ptr_t t2){
-        return t1->get_value() < t2->get_value();
-    }
-    vector_ptr_t vec_;
+
+    tree_vector_t vec_;
 };

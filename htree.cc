@@ -51,7 +51,7 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
 void HTree::print_path(possible_path_t pointPath) const{
   std::cout << "The path is: ";
   if (pointPath->empty()){
-    std::cout << "empty\n"; // returns empty, then segmentation fault coming from somewhere
+    std::cout << "empty"; // returns empty, then segmentation fault coming from somewhere
   } else {
     for (auto const &i: *pointPath) {
       if (i == HTree::Direction(0)){
@@ -66,42 +66,63 @@ void HTree::print_path(possible_path_t pointPath) const{
 
 
 HTree::possible_path_t HTree::path_help(key_t key, possible_path_t pointPath) const {
+
   if (this->key_ == key){
+    // initalize point path here
     return pointPath;
   }
 
   if (this->get_child(Direction(0))){
-    const auto leftTest = this->get_child(Direction(0))->path_help(key, move(pointPath));
+    auto leftTest = this->get_child(Direction(0))->path_help(key, move(pointPath));
     if (leftTest && !leftTest->empty()){
-      pointPath->push_front(Direction(0));
-      return pointPath;
+      leftTest->push_front(Direction(0));
+      return leftTest;
     }
   }
 
   if (this->get_child(Direction(1))){
-    const auto rightTest = this->get_child(Direction(1))->path_help(key,move(pointPath));
+    auto rightTest = this->get_child(Direction(1))->path_help(key, move(pointPath));
     if (rightTest && rightTest->empty()){
-      std::unique_ptr<path_t> emptyPath(new path_t({}));
-      return emptyPath;
+      return nullptr;
     } else {
-      pointPath->push_front(Direction(1));
-      return pointPath;
+      rightTest->push_front(Direction(1));
+      return rightTest;
     }
   }
 
-  return pointPath;
+
 }
 
 HTree::possible_path_t HTree::path_to(key_t key) const{
 
-  std::unique_ptr<path_t> pointPath(new path_t({})); // seems to be nullptr - why??
+
   if (this->key_ == key){
+    std::unique_ptr<path_t> pointPath(new path_t({ }));
     return pointPath;
   }
-  possible_path_t foundPath = path_help(key, move(pointPath));
-
-  if (foundPath->empty()){
-    return nullptr;
+  if (this->get_child(Direction(0))){
+    auto leftTest = this->get_child(Direction(0))->path_help(key, move(pointPath));
+    if (leftTest && !leftTest->empty()){
+      leftTest->push_front(Direction(0));
+      return leftTest;
+    }
   }
-  return foundPath;
+
+  if (this->get_child(Direction(1))){
+    auto rightTest = this->get_child(Direction(1))->path_help(key, move(pointPath));
+    if (rightTest && rightTest->empty()){
+      return nullptr;
+    } else {
+      rightTest->push_front(Direction(1));
+      return rightTest;
+    }
+  }
+  return nullptr;
+
+  //possible_path_t foundPath = path_help(key, move(pointPath)); // becomes nullptr when moved? no problems with the first test, where root == key
+
+  //if (foundPath->empty()){
+    //return nullptr;
+  //}
+  //return foundPath;
 }
