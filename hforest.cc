@@ -22,6 +22,6 @@ HForest::pop_tree(){ // error: unknown type name 'tree_ptr_t'
   // smallest thinks it's an int, but the contents of the vector are tree_ptr_t, confusing!
 }
 
-int HForest::size() const{ // this function doesn't even exist yet lol
-    return this->vector_t.size();
+int HForest::size() const{
+    return this->vec_->size();
 }
