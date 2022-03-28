@@ -13,13 +13,15 @@ class HForest {
     // construct a forest
     HForest(vector_ptr_t trees);
 
+    ~HForest()=default;
+
     // returns number of trees in forest
     int size() const;
 
     // add a tree to the forest
     void add_tree(tree_ptr_t tree);
 
-    // remove lowest-root tree, return pointer
+    // remove the tree with the lowest root value, return its pointer
     tree_ptr_t pop_tree();
 
 

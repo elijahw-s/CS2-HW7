@@ -11,12 +11,12 @@ HForest::HForest(vector_ptr_t trees){
 
 void HForest::add_tree(tree_ptr_t tree){
   this->vec_->push_back(tree);
-  std::push_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees);
+  std::make_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees);
 }
 
 HForest::tree_ptr_t
 HForest::pop_tree(){
-  std::pop_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees);
+  std::make_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees);
   //this->vec_->pop_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees); // error: no member named 'pop_heap' in 'std::vector<std::shared_ptr<const HTree>>'
   tree_ptr_t smallest = this->vec_->back(); // I think this is where the later problems are coming from??
   this->vec_->pop_back();
@@ -24,7 +24,6 @@ HForest::pop_tree(){
   // smallest thinks it's an int, but the contents of the vector are tree_ptr_t, confusing!
 }
 
-HForest::tree_ptr_t search_by_value(HTree::value_t value)
 
 int HForest::size() const{
     return this->vec_->size();
