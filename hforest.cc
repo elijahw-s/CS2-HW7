@@ -8,6 +8,7 @@ HForest::HForest(vector_ptr_t trees){
   std::make_heap(*trees->begin(), *trees->end(), HForest::compare_trees);
 }
 
+
 void HForest::add_tree(tree_ptr_t tree){
   this->vec_->push_back(tree);
   std::push_heap(this->vec_->begin(), this->vec_->end(), HForest::compare_trees);
@@ -22,6 +23,8 @@ HForest::pop_tree(){
   return smallest;  // error: no viable conversion from returned value of type 'HForest::tree_ptr_t' (aka 'shared_ptr<const HTree>') to function return type 'int'
   // smallest thinks it's an int, but the contents of the vector are tree_ptr_t, confusing!
 }
+
+HForest::tree_ptr_t search_by_value(HTree::value_t value)
 
 int HForest::size() const{
     return this->vec_->size();
