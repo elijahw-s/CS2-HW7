@@ -17,18 +17,13 @@ HTree::HTree(key_t key,
   {
   }
 
-// recursively destroy a tree
-HTree::~HTree(){
-  //this->get_child(HTree::Direction(0)).~HTree();
-  //this->get_child(HTree::Direction(1)).~HTree();
-  delete this;
-}
 
 // return the key of the current node
 HTree::key_t HTree::get_key() const{
   return this->key_;
 }
 
+HTree::~HTree()=default;
 // return the value of the current node
 HTree::value_t HTree::get_value() const{
   return this->value_;
@@ -101,16 +96,16 @@ HTree::possible_path_t HTree::path_to(key_t key) const{
     return pointPath;
   }
   if (get_child(Direction(0))){
-    auto leftTest = get_child(Direction(0))->path_to(key);
-    if (leftTest && !leftTest->empty()){
+    auto leftTest = get_child(Direction(0))->path_to(key); // will be nullptr if the key is not to the left
+    if (leftTest){
       leftTest->push_front(Direction(0));
       return leftTest;
     }
   }
 
   if (get_child(Direction(1))){
-    auto rightTest = this->get_child(Direction(1))->path_to(key);
-    if (rightTest && rightTest->empty()){
+    auto rightTest = get_child(Direction(1))->path_to(key);
+    if (!rightTest){
       return nullptr;
     } else {
       rightTest->push_front(Direction(1));
@@ -120,12 +115,4 @@ HTree::possible_path_t HTree::path_to(key_t key) const{
     return nullptr; // for key = 3, recurses properly through left, returns empty then goes right. right ends up being nullptr
     // somewhow (even through we check that it isn't) so line 116 generates a segmentation fault
   }
-
-
-  //possible_path_t foundPath = path_help(key, move(pointPath)); // becomes nullptr when moved? no problems with the first test, where root == key
-
-  //if (foundPath->empty()){
-    //return nullptr;
-  //}
-  //return foundPath;
 }
