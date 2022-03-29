@@ -11,7 +11,7 @@ test_htree: test_htree.o htree.o
 test_tree: test_tree.o tree.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 
-test_hforest: test_hforest.o hforest.o
+test_hforest: test_hforest.o hforest.o htree.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 %.o: %.cc %.hh
@@ -20,27 +20,12 @@ test_hforest: test_hforest.o hforest.o
 clean:
 	rm -rf *.o test_htree test_tree test_hforest
 
-#test: all
-#	./test_hforest
-#	./test_huffman
+test: all
+	./test_hforest
+	./test_huffman
 	./test_bitio
 
-
-#all: test_htree
-
-#test_htree: test_htree.o htree.o
-#	$(CXX) $(CXXFLAGS) -o test_htree test_htree.o htree.o
-
-#test_tree.o: test_htree.cc htree.hh
-#	$(CXX) $(CXXFLAGS) -c test_htree.cc
-
-#tree.o: htree.cc htree.hh
-#	$(CXX) $(CXXFLAGS) -c htree.cc
-
-# Use copy to move directory into patty. Replace 'treeHW' with desired destination folder.
+#Use copy to move directory into patty. Replace 'hw7' with desired destination folder.
 #You'll probably need to use clean and recompile before running.
 copy:
 	scp * patty:hw7
-
-clean:
-	rm -rf *.o test_htree

@@ -33,8 +33,9 @@ void test_htree(const HTree::tree_ptr_t root)
   if (!testRLPath){
     std::cout << "RL path is empty \n";
   }
-  assert(*testRLPath == *rlPath); //testRLPath is (L)LL when it should be (L)RL
-  //std::cout << "passed lr path test" << '\n';
+  assert(*testRLPath == *rlPath);
+  std::cout << "passed lr path test" << '\n';
+
   //HTree::possible_path_t llPath;
   //*llPath = new HTree::path_t();
   //std::unique_ptr<HTree::path_t> llPath(new HTree::path_t());

@@ -17,13 +17,13 @@ HTree::HTree(key_t key,
   {
   }
 
+HTree::~HTree()=default;
 
 // return the key of the current node
 HTree::key_t HTree::get_key() const{
   return this->key_;
 }
 
-HTree::~HTree()=default;
 // return the value of the current node
 HTree::value_t HTree::get_value() const{
   return this->value_;
@@ -32,21 +32,21 @@ HTree::value_t HTree::get_value() const{
 // get the child indicated by the directions
 HTree::tree_ptr_t HTree::get_child(Direction dir) const{
   if (dir == HTree::Direction(0)){
-    return this->left_;
+    return left_;
   } else if (dir == HTree::Direction(1)){
-    return this->right_;
-  } else {
+    return right_;
+  } else { // there is no child in the direction or an invalid direction was passed
     return nullptr;
   }
 }
 
-// Return an optional list of directions from root to a node of a given key.
-// If key not contained in this tree, returns nullptr
 
+// Iterate over a path and print the directions stored in it.
+// Used heavily in the debugging process.
 void HTree::print_path(possible_path_t pointPath) const{
   std::cout << "The path is: ";
   if (pointPath->empty()){
-    std::cout << "empty"; // returns empty, then segmentation fault coming from somewhere
+    std::cout << "empty";
   } else {
     for (auto const &i: *pointPath) {
       if (i == HTree::Direction(0)){
@@ -59,35 +59,8 @@ void HTree::print_path(possible_path_t pointPath) const{
   std::cout <<"\n";
 }
 
-
-//HTree::possible_path_t HTree::path_help(key_t key, possible_path_t pointPath) const {
-
-//  if (this->key_ == key){
-    // initalize point path here
-//    return pointPath;
-//  }
-
-//  if (this->get_child(Direction(0))){
-//    auto leftTest = this->get_child(Direction(0))->path_help(key, move(pointPath));
-//    if (leftTest && !leftTest->empty()){
-//      leftTest->push_front(Direction(0));
-//      return leftTest;
-//    }
-//  }
-
-//  if (this->get_child(Direction(1))){
-//    auto rightTest = this->get_child(Direction(1))->path_help(key, move(pointPath));
-//    if (rightTest && rightTest->empty()){
-//      return nullptr;
-//    } else {
-//      rightTest->push_front(Direction(1));
-//      return rightTest;
-//    }
-//  }
-
-
-//}
-
+// Return an optional list of directions from root to a node of a given key.
+// If key not contained in this tree, returns nullptr
 HTree::possible_path_t HTree::path_to(key_t key) const{
 
 
@@ -96,23 +69,22 @@ HTree::possible_path_t HTree::path_to(key_t key) const{
     return pointPath;
   }
   if (get_child(Direction(0))){
-    auto leftTest = get_child(Direction(0))->path_to(key); // will be nullptr if the key is not to the left
+    auto leftTest = get_child(Direction(0))->path_to(key); // will be nullptr if key is not to left
     if (leftTest){
-      leftTest->push_front(Direction(0));
+      leftTest->push_front(Direction(0)); // equivalent to return "L" + leftTest in old tree system
       return leftTest;
     }
   }
 
   if (get_child(Direction(1))){
-    auto rightTest = get_child(Direction(1))->path_to(key);
+    auto rightTest = get_child(Direction(1))->path_to(key); // will be nullptr if key is not to right
     if (!rightTest){
-      return nullptr;
+      return nullptr; // if we've reached this nullptr, the key is not in the tree
     } else {
       rightTest->push_front(Direction(1));
       return rightTest;
     }
   } else {
-    return nullptr; // for key = 3, recurses properly through left, returns empty then goes right. right ends up being nullptr
-    // somewhow (even through we check that it isn't) so line 116 generates a segmentation fault
+    return nullptr;
   }
 }

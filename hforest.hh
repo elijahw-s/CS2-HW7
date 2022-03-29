@@ -2,6 +2,7 @@
 
 #include "htree.hh"
 #include <vector>
+#include <iostream>
 
 class HForest {
   public:
@@ -19,11 +20,17 @@ class HForest {
     // returns number of trees in forest
     int size() const;
 
-    // add a tree to the forest
+    // add a tree to the forest, maintaining heap sorting
     void add_tree(tree_ptr_t tree);
 
     // remove the tree with the lowest root value, return its pointer
     tree_ptr_t pop_tree();
+
+    void print_forest(){
+      for (auto const &i: vec_){
+        std::cout << i->get_value()<<"\n";
+      }
+    };
 
 
   private:

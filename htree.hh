@@ -23,6 +23,8 @@ class HTree {
         value_t value,
         tree_ptr_t left = nullptr,
         tree_ptr_t right = nullptr);
+
+  // All pointers and lists manage their own allocation and deallocation
   ~HTree();
 
   key_t get_key() const;  // Return key in current node
@@ -41,6 +43,7 @@ private:
   value_t value_;
   tree_ptr_t left_;
   tree_ptr_t right_;
+
+  // Iterates over path and prints directions, mostly for debugging
   void print_path(possible_path_t pointPath) const;
-  //possible_path_t path_help(key_t key, possible_path_t pointPath) const;
 };
