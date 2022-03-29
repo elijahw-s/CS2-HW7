@@ -30,17 +30,3 @@ We decided to use the structure of the basic tree testing file that Eitan provid
 
 **test_hforest**
 We built three tree-constructor functions, each with a different value at the root. The forest initalizes with one of the trees, then the other two are added, with size checked after each addition. Then the trees are popped off one-by-one, with the forest's size checked each time.
-
-Current issues:
-
-- path_to has issues responding to being passed nullptr (segmentation fault errors). It also might not be returning a correct path, it's difficult to tell. I have print statements that'll hopefully help debug.
-- test_htree.cc isn't very robust. I have a decent test function from the last homework if we want to try to adapt that.
-- Strange errors in the HForest constructor
-
-Information about heap structure:
-
-https://en.cppreference.com/w/cpp/algorithm/make_heap
-
-https://en.cppreference.com/w/cpp/algorithm/pop_heap
-
-I put the pointers to the different trees into a vector, then tried to use make_heap with the correct compare function. That should make a min-heap if we can get the compare function to work.
