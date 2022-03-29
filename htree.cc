@@ -40,25 +40,6 @@ HTree::tree_ptr_t HTree::get_child(Direction dir) const{
   }
 }
 
-
-// Iterate over a path and print the directions stored in it.
-// Used heavily in the debugging process.
-void HTree::print_path(possible_path_t pointPath) const{
-  std::cout << "The path is: ";
-  if (pointPath->empty()){
-    std::cout << "empty";
-  } else {
-    for (auto const &i: *pointPath) {
-      if (i == HTree::Direction(0)){
-        std::cout << "0 ";
-      } else{
-        std::cout << "1 ";
-      }
-    }
-  }
-  std::cout <<"\n";
-}
-
 // Return an optional list of directions from root to a node of a given key.
 // If key not contained in this tree, returns nullptr
 HTree::possible_path_t HTree::path_to(key_t key) const{

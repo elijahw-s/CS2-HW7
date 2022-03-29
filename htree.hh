@@ -43,7 +43,4 @@ private:
   value_t value_;
   tree_ptr_t left_;
   tree_ptr_t right_;
-
-  // Iterates over path and prints directions, mostly for debugging
-  void print_path(possible_path_t pointPath) const;
 };

@@ -26,13 +26,6 @@ class HForest {
     // remove the tree with the lowest root value, return its pointer
     tree_ptr_t pop_tree();
 
-    void print_forest(){
-      for (auto const &i: vec_){
-        std::cout << i->get_value()<<"\n";
-      }
-    };
-
-
   private:
 
     tree_vector_t vec_;
