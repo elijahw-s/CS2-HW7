@@ -9,7 +9,6 @@ In addition to the required public functions, we also included a private functio
 - **Constructor:** Initalizes key, value, left, and right with given parameters. If no left or right is passed, it uses nullptr by default.
 - **Destructor:** Left as default. All of the pointers in HTree are either in the heap or manage their own deallocation.
 - **Getters:** Functions are defined to get a tree element's key, value, and children. The get_key and get_value functions simply return the relevant integer. The get_children function takes a direction parameter and returns the left or right child accordingly. If the child does not exist or an invalid direction is passed, the function returns nullptr.
-- **print_path:** If the path passed to the function is not empty, the function will iterate over the path and print the directions in order. If the path is empty, the function will simply print "empty". This function was used for debugging, but is also useful for test_htree.
 - **path_to:** Recurses through the tree to find a path to a node with the given key. If the key is not in the tree, it returns nullptr. The function first checks if the current node is has the same key as what it's looking for. If it's found the correct node, it will return an empty path. If not, it will first recurse down the left branch and return a path if the key is found. If the key isn't to the left, the function will recurse down the right branch and return a path if the key is found. If the function reaches the end of recursion without finding the key, it will return nullptr.
 
 
