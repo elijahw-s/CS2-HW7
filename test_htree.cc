@@ -60,26 +60,7 @@ create_test_tree_right()                    //                126
                                             //                       3
 
 /*
-This function allows for the list of directions stored as a path 
-to be converted into a string containing 'L' and 'R'
-*/
-std::string
-path_decode(HTree::possible_path_t &path)
-{
-  std::string str;
-  for (std::list<HTree::Direction>::iterator it = path->begin(); it != path->end(); ++it){
-    if (*it == HTree::Direction(0)){ // Checks if HTree::Direction == LEFT
-      str.append("L");
-    } else if (*it == HTree::Direction(1)){ // or if HTree::Direction == RIGHT
-      str.append("R");
-    } 
-  }
-  return str; // Returns a string of of the path
-}
-
-/*
 All of the testing functions feature basically identical tests just modified for the different sample trees
-so I'm going to only comment one of them because I really dont feel like commenting ~300 lines of code
 */
 
 // Test functions for the balanced tree
