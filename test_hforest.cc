@@ -17,7 +17,7 @@ HTree::tree_ptr_t create_test_tree_1()
 HTree::tree_ptr_t create_test_tree_2()
 {
   return
-    std::make_shared<HTree>(2,100, std::make_shared<HTree>(3,6),
+    std::make_shared<HTree>(2,90, std::make_shared<HTree>(3,6),
       std::make_shared<HTree>(4,12));
 }
 
@@ -68,7 +68,7 @@ void test_hforest(){
   auto lowest = forest->pop_tree(); // contains roots: 17, 100
   assert(lowest->get_value() == tree3->get_value());
   assert(forest->size() == 2);
-  std::cout << "Removed lowest-value tree. Key was: " << lowest->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << lowest->get_value() << '\n';
 
   forest->add_tree(tree4); // contains roots: 17, 100, 33
   assert(forest->size() == 3);
@@ -83,53 +83,55 @@ void test_hforest(){
   auto newLowest = forest->pop_tree(); // contains roots: 17, 100, 33, 1
   assert(newLowest->get_value() == tree3->get_value()); // could also be tree5->get_value()
   assert(forest->size() == 4);
-  std::cout << "Removed lowest-value tree. Key was: " << newLowest->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << newLowest->get_value() << '\n';
 
   auto secLowest = forest->pop_tree(); // contains roots: 17, 100, 33
   assert(secLowest->get_value() == tree5->get_value()); // could also be tree3->get_value()
   assert(forest->size() == 3);
-  std::cout << "Removed lowest-value tree. Key was: " << secLowest->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << secLowest->get_value() << '\n';
 
   auto middle = forest->pop_tree(); // contains roots: 100, 33
   assert(middle->get_value() == tree1->get_value());
   assert(forest->size() == 2);
-  std::cout << "Removed lowest-value tree. Key was: " << middle->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << middle->get_value() << '\n';
 
   auto secHighest = forest->pop_tree(); // contains roots: 100
   assert(secHighest->get_value() == tree4->get_value());
   assert(forest->size() == 1);
-  std::cout << "Removed lowest-value tree. Key was: " << secHighest->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << secHighest->get_value() << '\n';
 
   auto highest = forest->pop_tree(); // empty
   assert(highest->get_value() == tree2->get_value());
   assert(forest->size() == 0);
-  std::cout << "Removed lowest-value tree. Key was: " << highest->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << highest->get_value() << '\n';
   std::cout << "Forest is empty.\n\n";
+
+  /////////////////////////////////////////////////////////
 
   auto forest2 = std::make_shared<HForest>();
   assert(forest2->size() == 0);
   std::cout << "Initalized empty forest.\n";
 
   forest2->add_tree(tree3);
-  forest2->add_tree(tree5);
+  forest2->add_tree(tree3);
   assert(forest2->size() == 2);
   std::cout << "Added two trees to second forest.\n";
 
   auto lowest2 = forest2->pop_tree();
-  assert(lowest2->get_value() == 1);
+  assert(lowest2->get_value() == tree3->get_value());
   assert(forest2->size() == 1);
-  std::cout << "Removed lowest-value tree. Key was: " << lowest2->get_value() << '\n';
+  std::cout << "Removed lowest-value tree. Value was: " << lowest2->get_value() << '\n';
 
   auto highest2 = forest2->pop_tree();
-  assert(highest2->get_value() == 1);
+  assert(highest2->get_value() == tree3->get_value());
   assert(forest2->size() == 0);
-  std::cout << "Removed lowest-value tree. Key was: " << highest2->get_value() << '\n';
-  std::cout << "Forest is empty.\n";
+  std::cout << "Removed lowest-value tree. Value was: " << highest2->get_value() << '\n';
+  std::cout << "Forest is empty.\n\n";
 
 }
 
 int main(){
   test_hforest();
-  std::cout << "\n\n\n";
+  std::cout << "\nPassed all tests.\n";
   return 0;
 }
