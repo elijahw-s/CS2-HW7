@@ -22,10 +22,9 @@ clean:
 
 test: all
 	./test_hforest
-	./test_huffman
-	./test_bitio
+	./test_htree
 
 #Use copy to move directory into patty. Replace 'hw7' with desired destination folder.
 #You'll probably need to use clean and recompile before running.
-# copy:
-# 	scp * patty:hw7
+copy:
+        scp * patty:hw7
