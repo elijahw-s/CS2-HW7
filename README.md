@@ -1,4 +1,6 @@
-# CS2-HW7
+# CSCI 221-HW7
+
+**Elijah Whitlam-Sandler and Mollie Boor**
 
 To build the program, simply use the included Makefile. The Makefile also includes a copy command to move the files over to patty.
 
