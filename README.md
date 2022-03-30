@@ -25,7 +25,7 @@ We decided to use a standard library vector of tree pointers to structure our fo
 
 **test_htree**
 
-We decided to use the structure of the basic tree testing file that Eitan provided on Slack, edited to work with the new encapsulation. We also added a single-element tree, a left-only tree, and a right-only tree.
+We decided to use the structure of the basic tree testing file that Eitan provided on Slack, edited to work with the new encapsulation. We also added a single-element tree, a left-only tree, and a right-only tree. Each different kind of tree is individually tested with codes that ensure proper functioning of all required functions. For the single-element, left-only, and right-only trees, there are also codes that make sure a nullptr is returned when the paths do not exist.
 
 **test_hforest**
 We built three tree-constructor functions, each with a different value at the root. The forest initalizes with one of the trees, then the other two are added, with size checked after each addition. Then the trees are popped off one-by-one, with the forest's size checked each time.
