@@ -79,7 +79,7 @@ path_decode(HTree::possible_path_t &path)
 
 /*
 All of the testing functions feature basically identical tests just modified for the different sample trees
-so I'm going to only comment one of them because I really dont feel like commenting ~400 lines of code
+so I'm going to only comment one of them because I really dont feel like commenting ~300 lines of code
 */
 
 // Test functions for the balanced tree
