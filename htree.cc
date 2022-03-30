@@ -6,7 +6,7 @@
 #include "htree.hh"
 #include <iostream>
 #include <memory>
-
+#include <string>
 
 // Construct a tree
 HTree::HTree(key_t key,
@@ -69,3 +69,4 @@ HTree::possible_path_t HTree::path_to(key_t key) const{
     return nullptr;
   }
 }
+

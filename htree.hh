@@ -7,6 +7,7 @@
 
 #include <list>
 #include <memory>
+#include <string>
 
 class HTree {
  public:
